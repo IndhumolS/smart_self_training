@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        body {
+            background-image: url("/static/images/background.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header, footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .dashboard-container {
+            background-color: rgba(0, 0, 0, 0.6);
+            margin: 2rem auto;
+            padding: 2rem;
+            width: 70%;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        label, select, input, button {
+            font-size: 1rem;
+            margin: 10px;
+        }
+
+        video {
+            margin-top: 20px;
+            border: 2px solid white;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h2>Smart Self-Training System</h2>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <h1>Welcome, {{ user.username }}</h1>
+
+        <!-- Navigate to profile page -->
+        <a href="/profile"><button>👤 View Profile</button></a>
+
+        <!-- Display Prediction -->
+        {% if prediction %}
+            <h2>Predicted Shot: {{ prediction.replace('_', ' ').title() }}</h2>
+        {% endif %}
+
+        <!-- Display Video -->
+        {% if video_url %}
+            <h3>Watch the Video:</h3>
+            <video width="640" height="360" controls>
+                <source src="{{ video_url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        {% endif %}
+
+        <!-- Upload Form -->
+        <form action="/upload-image" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="user_name" value="{{ user.username }}">
+
+            <label>Upload Image:
+                <input type="file" name="image" required>
+            </label><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Smart Self-Training System</p>
+    </footer>
+
+</body>
+</html>

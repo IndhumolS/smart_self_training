@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Smart Self-Training System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Smart Self-Training System</h1>
+    </header>
+
+    <!-- Login Form -->
+    <div class="container">
+        <h2>Login</h2>
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        <form action="/login" method="post">
+
+            <!-- User Role Selection -->
+            <div class="form-group">
+                <label for="role">Login As:</label>
+                <select id="role" name="role">
+                    <option value="player">Player</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <!-- Email / Admin ID -->
+                <div class="form-group">
+                    <label for="email">Email / Admin ID:</label>
+                    <input type="text" id="email" name="email" required>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Login</button>
+        </form>
+
+        <!-- Signup Option -->
+        <p>Don't have an account? <a href="/register">Register here</a></p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Smart Self-Training System | All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>

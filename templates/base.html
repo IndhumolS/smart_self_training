@@ -1,0 +1,65 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Smart Self-Training System{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #f3f4f6, #e0f7fa);
+        }
+
+        header {
+            background-color: #1e88e5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #1e88e5;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .container {
+            padding: 40px;
+            max-width: 800px;
+            margin: 80px auto 100px auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    
+
+    <header>
+        <h1>Smart Self-Training System</h1>
+        <p>Learn and Improve Your Game Skills</p>
+    </header>
+    
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <!-- Centered Edit Profile Button -->
+    <div class="edit-button-container">
+        <form action="/edit-profile" method="get">
+            <button type="submit" class="edit-button">Edit Profile</button>
+        </form>
+    </div>
+    
+
+    <footer>
+        &copy; 2025 Smart Self-Training System | All Rights Reserved
+    </footer>
+</body>
+</html>

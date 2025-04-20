@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <h2 style="text-align:center; color:#1e88e5;">Welcome Admin</h2>
+
+    <form action="/upload-video" method="post" enctype="multipart/form-data" class="upload-form">
+        <label for="game">Select Game:</label>
+        <select name="game" required>
+            <option value="cricket">Cricket</option>
+            <option value="tennis">Tennis</option>
+            <option value="badminton">Badminton</option>
+        </select>
+
+        <label for="shot">Shot Type:</label>
+        <input type="text" name="shot" placeholder="e.g. cricket_cut_shot" required>
+
+        <label for="video">Upload Video:</label>
+        <input type="file" name="video" accept="video/*" required>
+
+        <input type="submit" value="Upload">
+    </form>
+
+    <style>
+        .upload-form {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .upload-form label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .upload-form input[type="text"],
+        .upload-form select,
+        .upload-form input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .upload-form input[type="submit"] {
+            background-color: #1e88e5;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .upload-form input[type="submit"]:hover {
+            background-color: #1565c0;
+        }
+    </style>
+{% endblock %}

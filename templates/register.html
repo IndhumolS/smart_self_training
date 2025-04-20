@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Smart Self-Training System</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/register.css') }}">
+</head>
+<body>
+    {% if request.query_params.get("success") == "true" %}
+    <script>
+        window.onload = function() {
+            alert("✅ Successfully Registered!");
+        };
+    </script>
+    {% endif %}
+    
+    <div class="container">
+        <h2>Sign Up for Your Account</h2>
+        <form method="post" action="/register" enctype="multipart/form-data">
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" name="fullname" placeholder="Enter full name" required>
+            </div>
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="Enter email" required>
+            </div>
+            <div class="input-group">
+                <label>Phone Number</label>
+                <input type="tel" name="phone" placeholder="Enter phone number" required pattern="[0-9]{10}">
+            </div>
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Choose a username" required>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Create password" required>
+            </div>
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password" placeholder="Confirm password" required>
+            </div>
+            
+            <div class="input-group">
+                <label>Profile Picture (Optional)</label>
+                <input type="file" name="profile_picture">
+            </div>
+            <div class="input-group terms">
+                <input type="checkbox" name="terms" required>
+                <label for="terms">I agree to the Terms & Conditions</label>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        
+
+        
+        <p>Already have an account? <a href="login">Login here</a></p>
+    </div>
+    <script src="{{ url_for('static', path='js/register.js') }}"></script>
+</body>
+</html>
