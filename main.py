@@ -11,6 +11,7 @@ from utils.predict_util import predict_shot_from_image_file
 from starlette.middleware.sessions import SessionMiddleware
 from models import user
 from routes import player_routes, admin_routes
+
 from routes.stream_video import router as stream_video_router
 import os
 import json
@@ -43,6 +44,8 @@ app.include_router(profile.router)
 app.include_router(player_routes.router)
 app.include_router(admin_routes.router)
 app.include_router(stream_video_router)
+
+
 
 # Define User Model
 class User(BaseModel):

@@ -92,3 +92,6 @@ def get_video_by_shot_type(shot_type):
 
 def get_user_by_username(username: str):
     return user_collection.find_one({"username": username})
+
+def get_database():
+    return db

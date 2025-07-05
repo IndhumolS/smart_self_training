@@ -147,3 +147,10 @@ templates = Jinja2Templates(directory="templates")
 @router.get("/edit-profile", response_class=HTMLResponse)
 async def edit_profile(request: Request):
     return templates.TemplateResponse("edit_profile.html", {"request": request})
+
+
+
+@router.get("/logout")
+async def logout(request: Request):
+    request.session.clear()
+    return RedirectResponse("/", status_code=302)

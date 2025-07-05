@@ -5,63 +5,79 @@
 {% block content %}
     <h2 style="text-align:center; color:#1e88e5;">Welcome Admin</h2>
 
-    <form action="/upload-video" method="post" enctype="multipart/form-data" class="upload-form">
-        <label for="game">Select Game:</label>
-        <select name="game" required>
-            <option value="cricket">Cricket</option>
-            <option value="tennis">Tennis</option>
-            <option value="badminton">Badminton</option>
-        </select>
+    <!-- Logout Button -->
+    <div style="text-align: right; margin: 20px;">
+        <a href="/logout"><button style="background-color: #e53935;">Logout</button></a>
+    </div>
 
-        <label for="shot">Shot Type:</label>
-        <input type="text" name="shot" placeholder="e.g. cricket_cut_shot" required>
+    <!-- Registered Users Table -->
+    <div style="margin: 20px auto; width: 90%;">
+        <h3 style="color: #333;">Registered Users</h3>
+        <table style="width: 100%; border-collapse: collapse; background-color: #f9f9f9;">
+            <thead>
+                <tr style="background-color: #1e88e5; color: white;">
+                    <th style="padding: 10px;">Username</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr style="text-align: center;">
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.password }}</td>
+                        <td>
+                            <form action="/admin/delete-user" method="post" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                <input type="hidden" name="username" value="{{ user.username }}">
+                                <button type="submit" style="background-color: #e53935;">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-        <label for="video">Upload Video:</label>
-        <input type="file" name="video" accept="video/*" required>
-
-        <input type="submit" value="Upload">
-    </form>
+    <!-- User Prediction Logs -->
+    <div style="margin: 20px auto; width: 90%;">
+        <h3 style="color: #333;">User Prediction Logs</h3>
+        <table style="width: 100%; border-collapse: collapse; background-color: #f1f1f1;">
+            <thead>
+                <tr style="background-color: #43a047; color: white;">
+                    <th style="padding: 10px;">Username</th>
+                    <th>Shot Predicted</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in prediction_logs %}
+                    <tr style="text-align: center;">
+                        <td>{{ log.username }}</td>
+                        <td>{{ log.shot }}</td>
+                        <td>{{ log.timestamp }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <style>
-        .upload-form {
-            max-width: 500px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .upload-form label {
-            font-weight: bold;
-            color: #333;
-        }
-
-        .upload-form input[type="text"],
-        .upload-form select,
-        .upload-form input[type="file"] {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 1rem;
-        }
-
-        .upload-form input[type="submit"] {
-            background-color: #1e88e5;
-            color: white;
-            padding: 10px;
+        button {
+            padding: 8px 16px;
             border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            border-radius: 5px;
+            color: white;
             font-size: 1rem;
+            cursor: pointer;
         }
-
-        .upload-form input[type="submit"]:hover {
-            background-color: #1565c0;
+        button:hover {
+            opacity: 0.9;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
         }
     </style>
 {% endblock %}

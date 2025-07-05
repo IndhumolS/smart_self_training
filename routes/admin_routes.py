@@ -1,28 +1,34 @@
-from fastapi import APIRouter, Form, UploadFile, File
-from fastapi.responses import HTMLResponse
-from database.mongodb import video_collection
-import shutil, os
+from fastapi import APIRouter, Form, Request, Depends
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.templating import Jinja2Templates
+from starlette.status import HTTP_302_FOUND
+from database.mongodb import user_collection, db, get_database
 
 router = APIRouter()
+templates = Jinja2Templates(directory="templates")
 
-@router.post("/upload-video")
-async def upload_video(game: str = Form(...), shot: str = Form(...), video: UploadFile = File(...)):
-    video_folder = "static/videos"
-    os.makedirs(video_folder, exist_ok=True)
+# Admin Dashboard Route
+@router.get("/admin/dashboard", response_class=HTMLResponse)
+async def admin_dashboard(request: Request):
+    db = get_database()
 
-    video_path = os.path.join(video_folder, f"{shot}.mp4")
+    # Fetch users with role 'player' and prediction logs
+    users = list(db["users"].find({"role": "player"}, {"_id": 0}))
+    logs = list(db["prediction_logs"].find({}, {"_id": 0}))
+    
+    return templates.TemplateResponse("admin_dashboard.html", {
+        "request": request,
+        "users": users,
+        "prediction_logs": logs
+    })
 
-    with open(video_path, "wb") as buffer:
-        shutil.copyfileobj(video.file, buffer)
+# Delete User Route
+@router.post("/admin/delete-user")
+async def delete_user(username: str = Form(...)):
+    # Check if user exists before deleting
+    user = user_collection.find_one({"username": username})
+    if not user:
+        return {"error": "User not found."}
 
-    video_url = f"/static/videos/{shot}.mp4"
-
-    # Store in MongoDB
-    video_doc = {
-        "game": game,
-        "shot_type": shot,
-        "video_url": video_url
-    }
-    video_collection.insert_one(video_doc)
-
-    return HTMLResponse(content="Video uploaded successfully!")
+    user_collection.delete_one({"username": username})  # Delete the user
+    return RedirectResponse(url="/admin/dashboard", status_code=HTTP_302_FOUND)
